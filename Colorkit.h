@@ -79,70 +79,70 @@ typedef NS_ENUM(NSInteger, ColorBlend) {
  
  @return NSString
  */
--(NSString *)getHexString;
+@property (nonatomic, readonly) NSString *hexString;
 
 /**
  Get an Array of RGBA Numbers from a Color
  
  @return NSArray red(0-255) green(0-255) blue(0-255) alpha(0-1)
  */
--(NSArray *)getRGBAArray;
+@property (nonatomic, readonly) NSArray *rgbaArray;
 
 /**
  Get an Array of HSBA Numbers from a Color
  
  @return NSArray hue(0-360) saturation(0-100) brightness(0-100) alpha(0-1)
  */
--(NSArray *)getHSBAArray;
+@property (nonatomic, readonly) NSArray *hsbaArray;
 
 /**
  Get the red value of a Color
  
  @return CGFloat (0-255)
  */
--(CGFloat)getRed;
+@property (nonatomic, readonly) CGFloat red;
 
 /**
  Get the green value of a Color
  
  @return CGFloat (0-255)
  */
--(CGFloat)getGreen;
+@property (nonatomic, readonly) CGFloat green;
 
 /**
  Get the blue value of a Color
  
  @return CGFloat (0-255)
  */
--(CGFloat)getBlue;
+@property (nonatomic, readonly) CGFloat blue;
 
 /**
  Get the hue value of a Color
  
  @return CGFloat (0-360)
  */
--(CGFloat)getHue;
+@property (nonatomic, readonly) CGFloat hue;
 
 /**
  Get the saturation value of a Color
  
  @return CGFloat (0-100)
  */
--(CGFloat)getSaturation;
+@property (nonatomic, readonly) CGFloat saturation;
 
 /**
  Get the brightness value of a Color
  
  @return CGFloat (0-100)
  */
--(CGFloat)getBrightness;
+@property (nonatomic, readonly) CGFloat brightness;
 
 /**
  Get the alpha value of a Color
  
  @return CGFloat (0-1)
  */
--(CGFloat)getAlpha;
+@property (nonatomic, readonly) CGFloat alpha;
 
 
 #pragma mark - Color operation functions
@@ -202,7 +202,7 @@ typedef NS_ENUM(NSInteger, ColorBlend) {
  @param secondColor UIColor
  @return UIColor
  */
-+(instancetype)blendingColorsWithMultiply:(id)firstColor secondColor:(id)secondColor;
++(instancetype)blendingColorsWithMultiply:(UIColor *)firstColor secondColor:(UIColor *)secondColor;
 
 /**
  Blending two colors with Screen
@@ -211,7 +211,7 @@ typedef NS_ENUM(NSInteger, ColorBlend) {
  @param secondColor UIColor
  @return UIColor
  */
-+(instancetype)blendingColorsWithScreen:(id)firstColor secondColor:(id)secondColor;
++(instancetype)blendingColorsWithScreen:(UIColor *)firstColor secondColor:(UIColor *)secondColor;
 
 /**
  Blending two colors with Overlay
@@ -220,7 +220,7 @@ typedef NS_ENUM(NSInteger, ColorBlend) {
  @param secondColor UIColor
  @return UIColor
  */
-+(instancetype)blendingColorsWithOverlay:(id)firstColor secondColor:(id)secondColor;
++(instancetype)blendingColorsWithOverlay:(UIColor *)firstColor secondColor:(UIColor *)secondColor;
 
 /**
  Blending two colors with Softlight
@@ -229,7 +229,7 @@ typedef NS_ENUM(NSInteger, ColorBlend) {
  @param secondColor UIColor
  @return UIColor
  */
-+(instancetype)blendingColorsWithSoftlight:(id)firstColor secondColor:(id)secondColor;
++(instancetype)blendingColorsWithSoftlight:(UIColor *)firstColor secondColor:(UIColor *)secondColor;
 
 /**
  Blending two colors with Hardlight
@@ -238,7 +238,7 @@ typedef NS_ENUM(NSInteger, ColorBlend) {
  @param secondColor UIColor
  @return UIColor
  */
-+(instancetype)blendingColorsWithHardlight:(id)firstColor secondColor:(id)secondColor;
++(instancetype)blendingColorsWithHardlight:(UIColor *)firstColor secondColor:(UIColor *)secondColor;
 
 /**
  Blending two colors with Difference
@@ -247,7 +247,7 @@ typedef NS_ENUM(NSInteger, ColorBlend) {
  @param secondColor UIColor
  @return UIColor
  */
-+(instancetype)blendingColorsWithDifference:(id)firstColor secondColor:(id)secondColor;
++(instancetype)blendingColorsWithDifference:(UIColor *)firstColor secondColor:(UIColor *)secondColor;
 
 /**
  Blending two colors with Exclusion
@@ -256,7 +256,7 @@ typedef NS_ENUM(NSInteger, ColorBlend) {
  @param secondColor UIColor
  @return UIColor
  */
-+(instancetype)blendingColorsWithExclusion:(id)firstColor secondColor:(id)secondColor;
++(instancetype)blendingColorsWithExclusion:(UIColor *)firstColor secondColor:(UIColor *)secondColor;
 
 
 @end

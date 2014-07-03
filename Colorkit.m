@@ -92,11 +92,11 @@
 
 
 #pragma mark - Color channel functions
--(NSString *)getHexString
+-(NSString *)hexString
 {
     unsigned int red, green, blue;
     
-    NSArray *colors = [self getRGBAArray];
+    NSArray *colors = self.rgbaArray;
     red   = [colors[0] floatValue];
     green = [colors[1] floatValue];
     blue  = [colors[2] floatValue];
@@ -108,7 +108,7 @@
     return [[NSString stringWithFormat:@"#%@%@%@", redHex, greenHex, blueHex] uppercaseString];
 }
 
--(NSArray *)getRGBAArray
+-(NSArray *)rgbaArray
 {
     int r, g, b;
     CGFloat red, green, blue, alpha;
@@ -120,7 +120,7 @@
     return @[@(r),@(g),@(b),@(alpha)];
 }
 
--(NSArray *)getHSBAArray
+-(NSArray *)hsbaArray
 {
     int h, s, b;
     CGFloat hue, saturation, brightness, alpha;
@@ -133,39 +133,39 @@
 }
 
 
--(CGFloat)getRed
+-(CGFloat)red
 {
-    return [[self getRGBAArray][0] floatValue];
+    return [self.rgbaArray[0] floatValue];
 }
 
--(CGFloat)getGreen
+-(CGFloat)green
 {
-    return [[self getRGBAArray][1] floatValue];
+    return [self.rgbaArray[1] floatValue];
 }
 
--(CGFloat)getBlue
+-(CGFloat)blue
 {
-    return [[self getRGBAArray][2] floatValue];
+    return [self.rgbaArray[2] floatValue];
 }
 
--(CGFloat)getHue
+-(CGFloat)hue
 {
-    return [[self getHSBAArray][0] floatValue];
+    return [self.hsbaArray[0] floatValue];
 }
 
--(CGFloat)getSaturation
+-(CGFloat)saturation
 {
-    return [[self getHSBAArray][1] floatValue];
+    return [self.hsbaArray[1] floatValue];
 }
 
--(CGFloat)getBrightness
+-(CGFloat)brightness
 {
-    return [[self getHSBAArray][2] floatValue];
+    return [self.hsbaArray[2] floatValue];
 }
 
--(CGFloat)getAlpha
+-(CGFloat)alpha
 {
-    return [[self getRGBAArray][3] floatValue];
+    return [self.rgbaArray[3] floatValue];
 }
 
 
@@ -173,7 +173,7 @@
 #pragma mark - Color operation functions
 -(instancetype)saturateColor:(CGFloat)amount
 {
-    NSMutableArray *base = [[NSMutableArray alloc] initWithArray:[self getHSBAArray]];
+    NSMutableArray *base = [[NSMutableArray alloc] initWithArray:self.hsbaArray];
     CGFloat saturation = [base[1] floatValue] + amount;
     
     if (saturation > 100) {
@@ -194,7 +194,7 @@
 
 -(instancetype)lightenColor:(CGFloat)amount
 {
-    NSMutableArray *base = [[NSMutableArray alloc] initWithArray:[self getHSBAArray]];
+    NSMutableArray *base = [[NSMutableArray alloc] initWithArray:self.hsbaArray];
     CGFloat brightness = [base[2] floatValue] + amount;
     
     if (brightness > 100) {
@@ -214,7 +214,7 @@
 
 -(instancetype)spinColor:(CGFloat)angle
 {
-    NSMutableArray *base = [[NSMutableArray alloc] initWithArray:[self getHSBAArray]];
+    NSMutableArray *base = [[NSMutableArray alloc] initWithArray:self.hsbaArray];
     CGFloat ang = [base[0] floatValue] + angle;
     ang = fmodf(ang, 360);
     if (ang < 0) {
@@ -232,37 +232,37 @@
 
 
 #pragma mark - Color blending functions
-+(instancetype)blendingColorsWithMultiply:(id)firstColor secondColor:(id)secondColor
++(instancetype)blendingColorsWithMultiply:(UIColor *)firstColor secondColor:(UIColor *)secondColor
 {
     return [self colorBlend:ColorBlendMultiply first:firstColor second:secondColor];
 }
 
-+(instancetype)blendingColorsWithScreen:(id)firstColor secondColor:(id)secondColor
++(instancetype)blendingColorsWithScreen:(UIColor *)firstColor secondColor:(UIColor *)secondColor
 {
     return [self colorBlend:ColorBlendScreen first:firstColor second:secondColor];
 }
 
-+(instancetype)blendingColorsWithOverlay:(id)firstColor secondColor:(id)secondColor
++(instancetype)blendingColorsWithOverlay:(UIColor *)firstColor secondColor:(UIColor *)secondColor
 {
     return [self colorBlend:ColorBlendOverlay first:firstColor second:secondColor];
 }
 
-+(instancetype)blendingColorsWithSoftlight:(id)firstColor secondColor:(id)secondColor
++(instancetype)blendingColorsWithSoftlight:(UIColor *)firstColor secondColor:(UIColor *)secondColor
 {
    return [self colorBlend:ColorBlendSoftlight first:firstColor second:secondColor];
 }
 
-+(instancetype)blendingColorsWithHardlight:(id)firstColor secondColor:(id)secondColor
++(instancetype)blendingColorsWithHardlight:(UIColor *)firstColor secondColor:(UIColor *)secondColor
 {
     return [self colorBlend:ColorBlendHardlight first:firstColor second:secondColor];
 }
 
-+(instancetype)blendingColorsWithDifference:(id)firstColor secondColor:(id)secondColor
++(instancetype)blendingColorsWithDifference:(UIColor *)firstColor secondColor:(UIColor *)secondColor
 {
     return [self colorBlend:ColorBlendDifference first:firstColor second:secondColor];
 }
 
-+(instancetype)blendingColorsWithExclusion:(id)firstColor secondColor:(id)secondColor
++(instancetype)blendingColorsWithExclusion:(UIColor *)firstColor secondColor:(UIColor *)secondColor
 {
     return [self colorBlend:ColorBlendExclusion first:firstColor second:secondColor];
 }
@@ -289,12 +289,12 @@
 }
 
 
-+(instancetype)colorBlend:(ColorBlend)type first:(id)color1 second:(id)color2
++(instancetype)colorBlend:(ColorBlend)type first:(UIColor *)color1 second:(UIColor *)color2
 {
     // inspired from Less css
     int i;
-    float ab = [color1 getAlpha];
-    float as = [color2 getAlpha];
+    float ab = color1.alpha;
+    float as = color2.alpha;
     float cb, cs;
     
     float ar = 0, cr = 0;
@@ -302,8 +302,8 @@
     
     ar = as + ab * (1 - as);
     for (i = 0; i < 3; i++) {
-        cb = [[color1 getRGBAArray][i] floatValue];
-        cs = [[color2 getRGBAArray][i] floatValue];
+        cb = [color1.rgbaArray[i] floatValue];
+        cs = [color2.rgbaArray[i] floatValue];
 
         switch (type) {
             case 0:

@@ -70,7 +70,7 @@
     
     currentColor = [self.colors objectAtIndex:indexPath.row];
     cell.backgroundColor = currentColor;
-    cell.textLabel.text  = [currentColor getHexString];
+    cell.textLabel.text  = currentColor.hexString;
     
     return cell;
 }
